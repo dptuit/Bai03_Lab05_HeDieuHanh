@@ -1,52 +1,47 @@
-# Prerequisites
-*.d
+/*######################################
+# University of Information Technology #
+# IT007 Operating System #
+# <Pham Thanh Dat>, <20521175> #
+# File: ex3.c #
+######################################*/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+#include <stdio.h>
+#include<semaphore.h>
+#include<pthread.h>
+#include<stdlib.h>
+#include<time.h>
 
-# Linker output
-*.ilk
-*.map
-*.exp
+int x = 0;
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+void *PROCESSA(void *mess)
+{
+    while(1)
+    {
+        x++;
+        if(x == 20)
+        {
+            x = 0;
+        }
+        printf("PROCESS A: x = %d\n", x);
+    }
+}
+void *PROCESSB(void *mess)
+{
+    while(1)
+    {
+         x++;
+        if(x == 20)
+        {
+            x = 0;
+        }
+        printf("PROCESS B: x = %d\n", x);
+    }
+}
+int main()
+{
+    pthread_t thr1, thr2;
+    pthread_create(&thr1, NULL, &PROCESSA, NULL);
+    pthread_create(&thr2, NULL, &PROCESSB, NULL);
+    while(1){}
+    return 0;
+}
